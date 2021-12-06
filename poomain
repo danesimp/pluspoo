@@ -1,0 +1,232 @@
+--Danehub Main
+
+if game.PlaceId == 155615604 then
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("Danehub: Prison Life", "Serpent")
+
+    -- MAIN
+    local Main = Window:NewTab("Main")
+    local FarmSection = Main:NewSection("Main")
+    
+    FarmSection:NewButton("Kill Aura", "PERMANENT - Kills everyone within a 10 stud radius of you.", function()
+        while wait () do
+            for i, e in pairs(game.Players:GetChildren()) do
+                                  if e ~= game.Players.LocalPlayer then
+                                      local meleeEvent = game:GetService("ReplicatedStorage").meleeEvent
+                                      meleeEvent:FireServer(e)
+                                      
+                                  end end end 
+    end)
+
+    FarmSection:NewDropdown("Give Gun", "Gives the localplayer a gun", {"M9", "Remington 870", "AK-47", "Keycard"}, function(v)
+        local A_1 = game:GetService("Workspace")["Prison_ITEMS"].giver[v].ITEMPICKUP
+        local Event = game:GetService("Workspace").Remote.ItemHandler
+        Event:InvokeServer(A_1)
+    end)
+
+    FarmSection:NewDropdown("Gun Mod", "Makes gun OP, will most likely crash the server.", {"M9", "Remington 870", "AK-47"}, function(v)
+        local module = nil
+        if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v) then
+            module = require(game:GetService("Players").LocalPlayer.Backpack[v].GunStates)
+        elseif game:GetService("Players").LocalPlayer.Character:FindFirstChild(v) then
+            module = require(game:GetService("Players").LocalPlayer.Character[v].GunStates)
+        end
+        if module ~= nil then
+            module["MaxAmmo"] = math.huge
+            module["CurrentAmmo"] = math.huge
+            module["StoredAmmo"] = math.huge
+            module["FireRate"] = 0.0001
+            module["Spread"] = 0
+            module["Range"] = math.huge
+            module["Bullets"] = 10
+            module["ReloadTime"] = 0.000001
+            module["AutoFire"] = true
+        end
+    end)
+    
+    --TELEPORTS
+    local Tele = Window:NewTab("Teleports")
+    local TeleportSection = Tele:NewSection("Teleports")
+    
+    TeleportSection:NewButton("Criminal Spawn", "Automatically makes you a criminal.", function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/danesimp/danesploit.lol/main/poggers.txt'))()
+    end)
+    
+    TeleportSection:NewButton("Courtyard", "Teleports you to the courtyard.", function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/danesimp/ginutrjhiubn8u3ybp36uy78b783t456y8nu54yn5/main/epic.txt'))()
+    end)
+    
+    TeleportSection:NewButton("Prison Cells", "Teleports you to the Prison Cells.", function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/danesimp/danesploit.lol/main/pog'))()
+    end)
+    
+    TeleportSection:NewButton("Guard Room", "Teleports you to the Guard Room", function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/danesimp/danesploit.lol/main/guns.txt'))()
+    end)
+    
+    -- PLAYER
+    local Player = Window:NewTab("Player")
+    local PlayerSection = Player:NewSection("Player")
+
+    PlayerSection:NewSlider("Walkspeed", "Changes the walkspeed", 250, 16, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+    end)
+
+    PlayerSection:NewSlider("Jumppower", "Changes the jumppower", 250, 50, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+    end)
+    
+    --CREDITS
+    
+    local Credit = Window:NewTab("Credits")
+    local CreditSection = Credit:NewSection("Credits")
+    
+    CreditSection:NewLabel("Scripts: daner#0009")
+    
+    CreditSection:NewLabel("Discord Server: Coming Soon!")
+    
+elseif game.PlaceId == 3956818381 then
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("Danehub: Ninja Legends", "Serpent")
+
+    -- FARMING
+    local Farming = Window:NewTab("Farming")
+    local FarmSection = Farming:NewSection("Farming")
+    local MiscFarmSection = Farming:NewSection("Miscellaneous")
+
+    FarmSection:NewToggle("Auto Swing", "Make your player autoswing", function(v)
+        getgenv().autoswing = v
+        while true do
+            if not getgenv().autoswing then return end
+            for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                if v:FindFirstChild("ninjitsuGain") then
+                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+                    break
+                end
+            end
+            local A_1 = "swingKatana"
+            local Event = game:GetService("Players").LocalPlayer.ninjaEvent
+            Event:FireServer(A_1)
+            wait(0.1)
+        end
+    end)
+    
+    FarmSection:NewToggle("Auto buy all swords", "Auto buys all swords", function(v)
+        getgenv().buyswords = v
+        while true do
+            if not getgenv().buyswords then return end
+            local A_1 = "buyAllSwords"
+            local A_2 = "Inner Peace Island"
+            local Event = game:GetService("Players").LocalPlayer.ninjaEvent
+            Event:FireServer(A_1, A_2)
+            wait(0.5)
+        end
+    end)
+
+    FarmSection:NewToggle("Auto buy all belts", "Auto buys all belts", function(v)
+        getgenv().buybelts = v
+        while true do
+            if not getgenv().buybelts then return end
+            local A_1 = "buyAllBelts"
+            local A_2 = "Inner Peace Island"
+            local Event = game:GetService("Players").LocalPlayer.ninjaEvent
+            Event:FireServer(A_1, A_2)
+            wait(0.5)
+        end
+    end)
+    
+    MiscFarmSection:NewButton("Unlock all islands", "Unlocks all islands", function()
+    local oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    for _,v in pairs(game:GetService("Workspace").islandUnlockParts:GetChildren()) do
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+        wait(0.1)
+    end
+    wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldcframe
+    end)
+
+    --MISC
+    local Misc = Window:NewTab("Misc")
+    local MiscSection = Misc:NewSection("Player")
+
+    MiscSection:NewSlider("Walkspeed", "Changes the walkspeed", 500, 16, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+    end)
+
+    MiscSection:NewButton("Max Double Jumps", "Gives you 50 double jumps", function()
+        game:GetService("Players").LocalPlayer.multiJumpCount:Destroy()
+        local a = Instance.new("NumberValue", game.Players.LocalPlayer)
+        a.Name = "multiJumpCount"
+        a.Value = 50
+        game.Players.LocalPlayer.Character.Head:Destroy()
+    end)
+
+    MiscSection:NewButton("Anti AFK", "Makes it so you cannot dc from the game while AFK", function()
+        local vu = game:GetService("VirtualUser")
+        game:GetService("Players").LocalPlayer.Idled:connect(function()
+            vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+            wait(1)
+            vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+        end)
+    end)
+
+    local Credits = Window:NewTab("Credits")
+    local CreditSection = Credits:NewSection("Credits")
+
+    CreditSection:NewLabel("Scripts: daner#0009")
+    
+    CreditSection:NewLabel("Discord Server: Coming Soon!")
+
+elseif game.PlaceId == 2551991523 then
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("Danehub: Broken Bones IV", "Serpent")
+
+    local Main = Window:NewTab("Main")
+    local MainSection = Main:NewSection("Autofarm")
+    local Misc = Window:NewTab("Misc")
+    local MiscSection = Misc:NewSection("Misc")
+    local PlayerSection = Misc:NewSection("Player")
+
+    MainSection:NewButton("Start", "Starts the auto farm.", function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2207, 128, -374)
+        plr = game:GetService('Players').LocalPlayer
+        torso = plr.Character.UpperTorso
+        hum = plr.Character.Humanoid
+        mouse = plr:GetMouse()
+        stop = false
+        while stop == false do
+        local bp = Instance.new('BodyPosition')
+        bp.MaxForce = Vector3.new(999999,999999,999999)
+        bp.Position = torso.Position
+        bp.Parent = torso
+        local bav = Instance.new('BodyAngularVelocity')
+        bav.MaxTorque = Vector3.new(999999,999999,999999)
+        bav.AngularVelocity = Vector3.new(200,200,200)
+        bav.Parent = torso
+        wait()
+        end
+    end)
+
+    MainSection:NewButton("Stop", "Stops the auto farm.", function()
+        local player = game.Players.LocalPlayer.Name
+        --reminder find new method to breakjoints    
+        game.workspace[player]:BreakJoints()
+    end)
+
+    MiscSection:NewButton("Anti AFK", "Makes it so you cannot dc from the game while AFK", function()
+        local vu = game:GetService("VirtualUser")
+        game:GetService("Players").LocalPlayer.Idled:connect(function()
+            vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+            wait(1)
+            vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+        end)
+    end)
+
+    PlayerSection:NewSlider("Walkspeed", "Changes the walkspeed", 500, 16, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+    end)
+
+    PlayerSection:NewSlider("Jumppower", "Changes the jumppower", 400, 50, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+    end)
+end
