@@ -209,7 +209,7 @@ elseif game.PlaceId == 2551991523 then
 
     MainSection:NewButton("Stop", "Stops the auto farm.", function()
         local player = game.Players.LocalPlayer.Name
-        --reminder find new method to breakjoints    
+   
         game.workspace[player]:BreakJoints()
     end)
 
@@ -236,6 +236,114 @@ elseif game.PlaceId == 2551991523 then
     CreditSection:NewLabel("Hub: daner#0009")
     
     CreditSection:NewLabel("Discord Server: 4MXJMRcBuy")
-end
 
---yo wazzzuppp dane was here
+elseif game.PlaceId == 3398014311 then
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("Danehub: Restaurant Tycoon 2", "Serpent")
+
+    local Main = Window:NewTab("Main")
+    local MainSection = Main:NewSection("Autofarm")
+
+    MainSection:NewButton("Player Auto Cook", "Automatically cooks for you", function()
+        local Cooking = game.Players.LocalPlayer.PlayerScripts.CookingNew
+        local CookProgress = require(Cooking.CookProgress)
+        local MultiClick = require(Cooking.InputDetectors.MultiClick)
+        local MouseMovement = require(Cooking.InputDetectors.MouseMovement)
+        local MouseSpin = require(Cooking.InputDetectors.MouseSpin)
+
+        local run = CookProgress.run
+            CookProgress.run = function(...)
+            local ARGS = {...}
+            ARGS[3] = 0
+            return run(unpack(ARGS))
+        end
+
+        MultiClick.start = function(...)
+            local ARGS = {...}
+            ARGS[3]()
+        end
+
+        MouseMovement.start = function(...)
+            local ARGS = {...}
+            ARGS[3]()
+        end
+
+        MouseSpin.start = function(...)
+            local ARGS = {...}
+            ARGS[3]()
+        end
+    end)
+
+    MainSection:NewButton("NPC Auto Cook", "Automatically cooks for the NPC", function()
+        local PS = game.Players.LocalPlayer.PlayerScripts
+        local Worker = require(PS.CookingNew.WorkerComponents.WorkerDefault)
+        local M1 = require(PS.ClientMain.Replications.Customers.GetNPCFolder)
+
+
+        Worker.event = function(...)
+            local args = {...}
+            local npc = M1.GetNPCFolder(args[1]).ClientWorkers:FindFirstChild(args[2])
+            local M2 = game.ReplicatedStorage.Resources.NewCookingResources.SharedCharacterComponents:FindFirstChild(args[4])
+            if M2 then
+                local Task = require(M2)
+                Task.finishInteract(npc,args[3],args[4])
+            end
+            return
+        end
+    end)
+
+    MainSection:NewButton("Anti AFK", "Makes it so you cannot dc from the game while AFK", function()
+        local vu = game:GetService("VirtualUser")
+        game:GetService("Players").LocalPlayer.Idled:connect(function()
+            vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+            wait(1)
+            vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+        end)
+    end)
+
+    local Tele = Window:NewTab("Teleports")
+    local TeleportSection = Tele:NewSection("Teleports")
+    local Misc = Window:NewTab("Misc")
+    local PlayerSection = Misc:NewSection("Player")
+    local Credit = Window:NewTab("Credits")
+    local CreditSection = Credit:NewSection("Credits")
+    
+    CreditSection:NewLabel("Hub: daner#0009")
+    
+    CreditSection:NewLabel("Discord Server: 4MXJMRcBuy")
+    
+    TeleportSection:NewButton("EKEA", "Teleports you to the furniture store.", function()
+        local plr = game.Players.LocalPlayer
+	
+		if plr.Character then
+			plr.Character:MoveTo(game:GetService("Workspace").Map.EKEA.testnew.Position) 
+		end
+    end)
+
+    TeleportSection:NewButton("Quest NPC", "Teleports you to the quest NPC.", function()
+        local plr = game.Players.LocalPlayer
+	
+		if plr.Character then
+			plr.Character:MoveTo(game:GetService("Workspace").Map.NPCs.ElderChef.HumanoidRootPart.Position) 
+		end
+    end)
+
+    TeleportSection:NewButton("Luigi's", "Teleports you to Luigi's Restaurant.", function()
+        local plr = game.Players.LocalPlayer
+	
+		if plr.Character then
+			plr.Character:MoveTo(game:GetService("Workspace").Portal.Part.Position) 
+		end
+    end)
+
+    PlayerSection:NewSlider("Walkspeed", "Changes the walkspeed", 500, 16, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+    end)
+
+    PlayerSection:NewSlider("Jumppower", "Changes the jumppower", 400, 50, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+    end)
+
+    
+
+end
